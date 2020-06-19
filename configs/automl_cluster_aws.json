@@ -1,0 +1,26 @@
+{
+    "cluster": {
+        "cluster_name": "dc-automl",
+        "spark_version": "6.4.x-cpu-ml-scala2.11",
+        "driver_node_type_id": "i3.xlarge",
+        "node_type_id": "i3.xlarge",
+        "spark_conf": {},
+        "num_workers": 4,
+        "aws_attributes": {
+            "first_on_demand": 1,
+            "availability": "SPOT_WITH_FALLBACK",
+            "zone_id": "us-west-2c",
+            "spot_bid_price_percent": 100,
+            "ebs_volume_count": 0
+        },
+        "autotermination_minutes": 30
+    },
+    "libraries": [
+        {
+            "jar": "dbfs:/home/dave.carlson@databricks.com/libs/automatedml_2.11-0.7.1.jar"
+        },
+        {
+            "whl": "dbfs:/home/dave.carlson@databricks.com/libs/pyAutoML-0.2.0-py3-none-any.whl"
+        }
+    ]
+}

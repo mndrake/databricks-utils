@@ -1,0 +1,12 @@
+name: db
+
+dependencies:
+  - python=3.7
+  - pip
+  - pip:
+    - pylint
+    - databricks-cli
+    - python-dotenv
+    - configparser
+    - click
+

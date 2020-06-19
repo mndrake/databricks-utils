@@ -1,0 +1,22 @@
+{
+    "cluster": {
+        "num_workers": 4,
+        "cluster_name": "dc-automl",
+        "spark_version": "6.6.x-cpu-ml-scala2.11",
+        "spark_conf": {
+            "spark.databricks.delta.preview.enabled": "true"
+        },
+        "node_type_id": "Standard_DS3_v2",
+        "driver_node_type_id": "Standard_DS3_v2",
+        "autotermination_minutes": 30,
+        "enable_elastic_disk": true
+    },
+    "libraries": [
+        {
+            "jar": "dbfs:/home/dave.carlson@databricks.com/libs/automatedml_2.11-0.7.1.jar"
+        },
+        {
+            "whl": "dbfs:/home/dave.carlson@databricks.com/libs/pyAutoML-0.2.0-py3-none-any.whl"
+        }
+    ]
+}
