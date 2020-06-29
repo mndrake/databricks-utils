@@ -6,6 +6,7 @@ dependencies:
   - pip:
     - pylint
     - databricks-cli
+    - databricks-connect==6.6.*
     - python-dotenv
     - configparser
     - click
