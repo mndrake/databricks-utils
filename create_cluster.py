@@ -18,6 +18,7 @@ class DatabricksAPI(object):
     doc page: https://docs.databricks.com/dev-tools/api/latest/index.html
     """
     host = None
+    token = None
     organization = None
     headers = None
     cluster = None
@@ -31,6 +32,7 @@ class DatabricksAPI(object):
             self.organization = matches[1]
         else:
             self.host = host
+        self.token = token
         self.headers = {'Authorization': f'Bearer {token}'}
 
     def request(self, route, params=None, body=None):
@@ -58,8 +60,9 @@ class DatabricksAPI(object):
 
 @click.command()
 @click.option('--profile', default='DEFAULT', help='Databricks CLI profile')
+@click.option('--dbconnect', default='FALSE', help='Set dbconnect to this cluster')
 @click.option('--config', prompt='cluster config file', help='Cluster JSON config and libraries')
-def create_cluster(profile=None, config=None):
+def create_cluster(profile=None, dbconnect=None, config=None):
     cluster_config = json.load(open(config))
 
     # retrieve databricks config for the profile
@@ -86,6 +89,19 @@ def create_cluster(profile=None, config=None):
     click.echo('installing libraries...')
     # install libraries
     api.install_libraries(cluster_config['libraries'])
+
+    if dbconnect:
+        click.echo('setting cluster to dbconnect default')
+        # update databricks-connect with cluster info
+        cluster_config = {
+            'host': api.host,
+            'token': api.token,
+            **api.cluster,
+            'port': '15001'
+        }
+        # update databricks-connect with cluster config
+        with open(os.path.expanduser('~/.databricks-connect'), 'w') as f:
+            json.dump(cluster_config, f)
 
 
 if __name__ == '__main__':
