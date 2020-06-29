@@ -60,9 +60,9 @@ class DatabricksAPI(object):
 
 @click.command()
 @click.option('--profile', default='DEFAULT', help='Databricks CLI profile')
-@click.option('--dbconnect', default='FALSE', help='Set dbconnect to this cluster')
 @click.option('--config', prompt='cluster config file', help='Cluster JSON config and libraries')
-def create_cluster(profile=None, dbconnect=None, config=None):
+@click.option('--dbconnect', is_flag=True, help='Set dbconnect to use this cluster')
+def create_cluster(profile=None, config=None, dbconnect=None):
     cluster_config = json.load(open(config))
 
     # retrieve databricks config for the profile
@@ -99,6 +99,9 @@ def create_cluster(profile=None, dbconnect=None, config=None):
             **api.cluster,
             'port': '15001'
         }
+        if api.organization:
+            cluster_config['org_id'] = api.organization
+
         # update databricks-connect with cluster config
         with open(os.path.expanduser('~/.databricks-connect'), 'w') as f:
             json.dump(cluster_config, f)
@@ -106,3 +109,6 @@ def create_cluster(profile=None, dbconnect=None, config=None):
 
 if __name__ == '__main__':
     create_cluster()
+
+if "hello":
+    print("hi")

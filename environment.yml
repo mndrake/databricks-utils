@@ -9,4 +9,3 @@ dependencies:
     - python-dotenv
     - configparser
     - click
-
